@@ -15,6 +15,7 @@ vim.opt.backspace = 'indent,eol,start'
 vim.opt.ttimeout = true
 vim.opt.ttimeoutlen = 10
 vim.opt.mouse=''
+vim.opt.termguicolors = true
 
 vim.opt.foldenable = true
 vim.opt.fdm = 'indent'
