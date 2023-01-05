@@ -31,9 +31,8 @@ vim.opt.shiftwidth = 4
 
 vim.keymap.set('n', '<C-h>', '<C-o>', {noremap = true})
 vim.keymap.set('n', '<C-l>', '<C-i>', {noremap = true})
-vim.keymap.set('n', '<C-j>', ':tabm -1<CR>')
-vim.keymap.set('n', '<C-k>', ':tabm +1<CR>')
-vim.keymap.set('n', '<C-n>', ':nohl<CR>')
+vim.keymap.set('n', '<C-j>', ':tabm -1<CR>', {silent = true})
+vim.keymap.set('n', '<C-k>', ':tabm +1<CR>', {silent = true})
 
 vim.keymap.set('n', 'y/', '/<C-R>"<CR>')
 vim.keymap.set('v', '/', 'y :/<C-R>"<CR>', {noremap = true})
@@ -52,18 +51,19 @@ end
 
 vim.keymap.set('n', '<leader>t', '<C-W>T')
 vim.keymap.set('n', '<leader>o', '<C-W>o')
+vim.keymap.set('n', '<leader>l', ':nohl<CR>', {silent = true})
 
-vim.cmd[[
-autocmd BufWritePost *
-    \ if g:asyncrun_status != 'running' |
-    \     exec "AsyncRun [ ! -e .tmptags ] && [ -e tags ] && ctags -R -o .tmptags && mv .tmptags tags" |
-    \ endif
+vim.api.nvim_create_autocmd('BufWritePost', {callback = function()
+    if vim.g.asyncrun_status ~= 'running' then
+        vim.cmd.AsyncRun('[ ! -e .tmptags ] && [ -e tags ] && ctags -R -o .tmptags && mv .tmptags tags')
+    end
+end})
+vim.api.nvim_create_autocmd('VimLeave', {command = '!rm -f .tmptags'})
 
-autocmd VimLeave * :! rm -f .tmptags
-
-autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \    exe "normal! g`\"" |
-    \ endif
-]]
+vim.api.nvim_create_autocmd('BufReadPost', {callback = function()
+    local line = vim.fn.line('\'"')
+    if line > 1 and line <= vim.fn.line('$') then
+        vim.cmd.normal('g`"')
+    end
+end})
 
