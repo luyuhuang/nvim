@@ -46,18 +46,39 @@ return {
         require("scrollbar").setup()
     end},
 
-    'junegunn/fzf',
-    {'junegunn/fzf.vim', config = function()
-        vim.keymap.set('n', '<C-p>', ':Files<CR>')
-        vim.keymap.set('n', '<C-o>', ':BTags<CR>')
-        vim.keymap.set('n', 'gd', ':Tags <C-R>=expand("<cword>")<CR><CR>')
-        vim.keymap.set('n', 'gs', [[:call fzf#vim#ag(expand("<cword>"), '--literal --word-regexp', fzf#vim#with_preview())<CR>]])
-        vim.keymap.set('v', 'gs', [[y :call fzf#vim#ag('<C-R>"', '--literal', fzf#vim#with_preview())<CR>]])
-        vim.keymap.set('n', 'go', [[yi" :call fzf#vim#files('', fzf#vim#with_preview({'options': ['-q', '<C-R>"']}))<CR>]])
+    {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = {
+        'nvim-lua/plenary.nvim',
+        'BurntSushi/ripgrep',
+    }, config = function()
+        local builtin = require('telescope.builtin')
+
+        vim.keymap.set('n', '<leader>f', builtin.live_grep)
+        vim.keymap.set('n', '<C-p>', builtin.find_files)
+        vim.keymap.set('n', '<C-o>', builtin.current_buffer_tags)
+        vim.keymap.set('n', 'gd', function()
+            builtin.tags({default_text = vim.fn.expand('<cword>')})
+        end)
+        vim.keymap.set('n', 'gs', function()
+            builtin.grep_string({word_match = '-w'})
+        end)
+        vim.keymap.set('v', 'gs', function()
+            vim.cmd.normal('"fy')
+            builtin.grep_string({search = vim.fn.getreg('"f')})
+        end)
+        vim.keymap.set('n', 'go', function()
+            local cur = vim.fn.getline('.')
+            local pos = vim.fn.getpos('.')[3]
+            if cur:find('"', pos) then
+                vim.cmd.normal('"fyi"')
+            else
+                vim.cmd.normal('"fyi\'')
+            end
+            builtin.find_files({default_text = vim.fn.getreg('"f')})
+        end)
     end},
 
     'vim-syntastic/syntastic',
-    'skywind3000/asyncrun.vim',
+    {'skywind3000/asyncrun.vim', opt = true, cmd = {'AsyncRun'}},
     'mg979/vim-visual-multi',
 
     {'skywind3000/vim-auto-popmenu', config = function()
@@ -67,7 +88,7 @@ return {
     end},
 
     {'folke/tokyonight.nvim', config = function()
-        vim.cmd('colorscheme tokyonight-day')
+        vim.cmd.colorscheme('tokyonight-day')
     end},
     {'nvim-lualine/lualine.nvim', config = function()
         require('lualine').setup{
