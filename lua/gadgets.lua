@@ -26,14 +26,23 @@ do -- tag preview
 end
 
 do -- auto tags
+    local running
     vim.api.nvim_create_autocmd('BufWritePost', {callback = function()
+        if running then return end
         local ctags_opts = vim.g.ctags_opts or '-R'
         local ctags = 'ctags -o .tmptags ' .. ctags_opts
-        if vim.g.asyncrun_status ~= 'running' then
-            vim.cmd.AsyncRun('[ ! -e .tmptags ] && [ -e tags ] && ' .. ctags .. ' && mv .tmptags tags')
-        end
+        vim.loop.new_work(function(ctags)
+            if not vim.loop.fs_access('.tmptags', 0) and vim.loop.fs_access('tags', 0) then
+                return os.execute(ctags) == 0 and vim.loop.fs_rename('.tmptags', 'tags')
+            end
+        end, function()
+            running = false
+        end):queue(ctags)
+        running = true
     end})
-    vim.api.nvim_create_autocmd('VimLeave', {command = '!rm -f .tmptags'})
+    vim.api.nvim_create_autocmd('VimLeave', {callback = function()
+        vim.loop.fs_unlink('.tmptags')
+    end})
 end
 
 do -- goto last position
@@ -48,6 +57,9 @@ end
 do -- exrc
     vim.opt.exrc = false
     local function exrc()
+        if vim.fn.empty(vim.fn.glob('~/.nvimrc.lua')) ~= 1 then
+            vim.cmd.source('~/.nvimrc.lua')
+        end
         if vim.fn.empty(vim.fn.glob('.exrc.lua')) ~= 1 then
             vim.cmd.source('.exrc.lua')
         end

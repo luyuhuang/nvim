@@ -81,7 +81,6 @@ return {
     end},
 
     'vim-syntastic/syntastic',
-    {'skywind3000/asyncrun.vim', opt = true, cmd = {'AsyncRun'}},
     'mg979/vim-visual-multi',
 
     {'skywind3000/vim-auto-popmenu', config = function()
