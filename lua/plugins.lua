@@ -75,6 +75,9 @@ return {
             end
             builtin.find_files({default_text = vim.fn.getreg('"f')})
         end)
+
+        vim.api.nvim_create_user_command('Glg', "Telescope git_commits", {})
+        vim.api.nvim_create_user_command('Gst', "Telescope git_status", {})
     end},
 
     'vim-syntastic/syntastic',
