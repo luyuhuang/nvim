@@ -51,12 +51,14 @@ return {
         'BurntSushi/ripgrep',
     }, config = function()
         local builtin = require('telescope.builtin')
+        local pickers = require('pickers')
 
         vim.keymap.set('n', '<leader>f', builtin.live_grep)
         vim.keymap.set('n', '<C-p>', builtin.find_files)
-        vim.keymap.set('n', '<C-o>', builtin.current_buffer_tags)
+        vim.keymap.set('n', '<C-o>', pickers.current_buffer_tags)
         vim.keymap.set('n', 'gd', function()
-            builtin.tags({default_text = vim.fn.expand('<cword>')})
+            local cword = vim.fn.expand('<cword>')
+            pickers.grep_tags({tag = cword, only_sort_tags = true})
         end)
         vim.keymap.set('n', 'gs', function()
             builtin.grep_string({word_match = '-w'})
