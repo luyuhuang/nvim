@@ -2,6 +2,8 @@
 
 My personal Neovim configurations
 
+![screenshot](screenshot.png)
+
 ## Installation
 
 ```sh
