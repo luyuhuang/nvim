@@ -81,6 +81,7 @@ local function current_buffer_tags(opts)
     opts = set_opts(opts)
     opts.prompt_title = 'Current Buffer Tags'
     opts.only_current_file = true
+    opts.only_sort_tags = true
     opts.path_display = 'hidden'
 
     local cwd = vim.fn.expand(opts.cwd or vim.loop.cwd())
