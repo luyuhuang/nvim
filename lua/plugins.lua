@@ -1,3 +1,5 @@
+vim.keymap.set('n', '<F3>', '<Cmd>NvimTreeToggle<CR>')
+
 return {
     {'lewis6991/gitsigns.nvim', config = function()
         local gs = require('gitsigns')
@@ -50,36 +52,7 @@ return {
         'nvim-lua/plenary.nvim',
         'BurntSushi/ripgrep',
     }, config = function()
-        local builtin = require('telescope.builtin')
-        local pickers = require('pickers')
-
-        vim.keymap.set('n', '<leader>f', builtin.live_grep)
-        vim.keymap.set('n', '<C-p>', builtin.find_files)
-        vim.keymap.set('n', '<C-o>', pickers.current_buffer_tags)
-        vim.keymap.set('n', 'gd', function()
-            local cword = vim.fn.expand('<cword>')
-            pickers.grep_tags({tag = cword, only_sort_tags = true})
-        end)
-        vim.keymap.set('n', 'gs', function()
-            builtin.grep_string({word_match = '-w'})
-        end)
-        vim.keymap.set('v', 'gs', function()
-            vim.cmd.normal('"fy')
-            builtin.grep_string({search = vim.fn.getreg('"f')})
-        end)
-        vim.keymap.set('n', 'go', function()
-            local cur = vim.fn.getline('.')
-            local pos = vim.fn.getpos('.')[3]
-            if cur:find('"', pos) then
-                vim.cmd.normal('"fyi"')
-            else
-                vim.cmd.normal('"fyi\'')
-            end
-            builtin.find_files({default_text = vim.fn.getreg('"f')})
-        end)
-
-        vim.api.nvim_create_user_command('Glg', "Telescope git_commits", {})
-        vim.api.nvim_create_user_command('Gst', "Telescope git_status", {})
+        require('plugin_config.telescope')
     end},
 
     'vim-syntastic/syntastic',
@@ -103,5 +76,20 @@ return {
             },
             sections = {lualine_c = {{'filename', path = 1}}},
         }
+    end},
+
+    {'nvim-tree/nvim-tree.lua', opt = true, cmd = {'NvimTreeToggle'}, config = function()
+        require("nvim-tree").setup({
+            renderer = {indent_markers = {
+                enable = true,
+            }, icons = {show = {
+                file = false,
+                folder = false,
+                git = false,
+            }, glyphs = {folder = {
+                arrow_closed = '>',
+                arrow_open = 'v',
+            }}}}
+        })
     end},
 }
