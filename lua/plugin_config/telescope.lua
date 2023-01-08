@@ -36,6 +36,10 @@ local function sorter(opts)
             return 1 / (fzy_score + OFFSET)
         end,
         highlighter = function(_, prompt, display)
+            local i = prompt:find(':', 1, true)
+            if i then
+                prompt = prompt:sub(1, i - 1)
+            end
             return fzy.positions(prompt, display)
         end
     })
