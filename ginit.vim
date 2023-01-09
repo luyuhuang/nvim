@@ -1,5 +1,5 @@
 set mouse=a
-GuiFont Consolas:h14
+GuiFont! Hack Nerd Font:h14
 
 imap <C-v> <Esc>"+pa
 vmap <C-c> "+y
