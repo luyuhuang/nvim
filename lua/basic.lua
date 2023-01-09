@@ -44,6 +44,8 @@ vim.keymap.set('i', '<C-h>', '<left>')
 vim.keymap.set('i', '<C-j>', '<down>')
 vim.keymap.set('i', '<C-k>', '<up>')
 vim.keymap.set('i', '<C-l>', '<right>')
+vim.keymap.set('i', '<C-v>', '<Esc>pa')
+vim.keymap.set('v', '<C-c>', 'y')
 
 vim.g.mapleader = ' '
 for i = 1, 9 do
