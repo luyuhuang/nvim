@@ -1,4 +1,4 @@
-vim.keymap.set('n', '<F3>', '<Cmd>NvimTreeToggle<CR>')
+vim.keymap.set('n', '<F3>', '<Cmd>NvimTreeFindFileToggle<CR>')
 
 return {
     {'lewis6991/gitsigns.nvim', config = function()
@@ -45,11 +45,18 @@ return {
     end},
 
     'kyazdani42/nvim-web-devicons',
-    {'nvim-tree/nvim-tree.lua', opt = true, cmd = {'NvimTreeToggle'}, config = function()
+    {'nvim-tree/nvim-tree.lua', opt = true, cmd = {'NvimTreeFindFileToggle'}, config = function()
         require("nvim-tree").setup({
             renderer = {indent_markers = {
                 enable = true,
             }}
         })
     end},
+
+    {'akinsho/bufferline.nvim', opt = true, event = 'BufReadPost', config = function()
+        require("bufferline").setup{options = {
+            mode = 'tabs',
+            max_name_length = 30,
+        }}
+    end}
 }
