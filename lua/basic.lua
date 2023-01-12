@@ -1,3 +1,8 @@
+local utils = require('utils')
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
@@ -38,16 +43,29 @@ vim.keymap.set('n', '<C-l>', '<C-i>', {noremap = true})
 vim.keymap.set('n', '<C-j>', ':tabm -1<CR>', {silent = true})
 vim.keymap.set('n', '<C-k>', ':tabm +1<CR>', {silent = true})
 
-vim.keymap.set('n', 'y/', '/<C-R>"<CR>')
-vim.keymap.set('v', '/', 'y :/<C-R>"<CR>', {noremap = true})
-vim.keymap.set('v', '?', 'y :?<C-R>"<CR>', {noremap = true})
+local function search_reg(dir, reg)
+    local origin = vim.fn.getreg(reg or '"')
+    local pattern = origin:gsub('[/\\]', {['/'] = '\\/', ['\\'] = '\\\\'})
+    if not pcall(vim.cmd, dir .. '\\V' .. pattern) then
+        utils.log_warn('pattern %q not found', origin)
+    end
+end
+
+vim.keymap.set('n', 'y/', function() search_reg('/', vim.v.register) end)
+vim.keymap.set('n', 'y?', function() search_reg('?', vim.v.register) end)
+vim.keymap.set('v', '/', function() vim.cmd.normal('y') search_reg('/') end)
+vim.keymap.set('v', '?', function() vim.cmd.normal('y') search_reg('?') end)
 
 vim.keymap.set('i', '<C-h>', '<left>')
 vim.keymap.set('i', '<C-j>', '<down>')
 vim.keymap.set('i', '<C-k>', '<up>')
 vim.keymap.set('i', '<C-l>', '<right>')
-vim.keymap.set('i', '<C-v>', '<Esc>pa')
-vim.keymap.set('v', '<C-c>', 'y')
+
+vim.keymap.set('i', '<C-v>', function()
+    return vim.fn.col('.') == 1 and '<Esc>"cPa' or '<Esc>"cpa'
+end, {expr = true})
+vim.keymap.set('v', '<C-v>', '"cp')
+vim.keymap.set('v', '<C-c>', '"cy')
 
 vim.g.mapleader = ' '
 for i = 1, 9 do

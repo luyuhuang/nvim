@@ -4,11 +4,13 @@ local builtin = require('telescope.builtin')
 local make_entry = require('telescope.make_entry')
 local finders = require('telescope.finders')
 local Path = require('plenary.path')
+local utils = require('utils')
 
 local line_no
 local function post()
     if line_no then
         vim.cmd.normal(line_no .. 'G')
+        line_no = nil
     end
 end
 
@@ -68,7 +70,7 @@ local function awk_tags(opts)
         tagfiles[i] = vim.fn.expand(ctags_file, true)
     end
     if vim.tbl_isempty(tagfiles) then
-        print('No tags file found.')
+        utils.log_err('No tags file found.')
         return
     end
     opts.entry_maker = opts.entry_maker or make_entry.gen_from_ctags(opts)

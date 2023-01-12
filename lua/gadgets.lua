@@ -1,3 +1,5 @@
+local utils = require('utils')
+
 do -- tag preview
     local jump_stack = {}
     vim.keymap.set('n', 'K', function()
@@ -10,7 +12,7 @@ do -- tag preview
             table.insert(jump_stack, win)
         else
             vim.api.nvim_win_close(win, false)
-            print("tag `" .. cword .. "' not found")
+            utils.log_warn('tag %q not found', cword)
         end
     end, {noremap = true})
 
@@ -70,4 +72,12 @@ do -- exrc
     else
         vim.api.nvim_create_autocmd('VimEnter', {callback = exrc})
     end
+end
+
+do
+    vim.api.nvim_create_autocmd('BufEnter', {callback = function()
+        if vim.fn.winnr('$') == 1 and vim.bo.filetype == 'NvimTree' then
+            vim.cmd.quit()
+        end
+    end})
 end

@@ -47,9 +47,10 @@ return {
     'kyazdani42/nvim-web-devicons',
     {'nvim-tree/nvim-tree.lua', opt = true, cmd = {'NvimTreeFindFileToggle'}, config = function()
         require("nvim-tree").setup({
-            renderer = {indent_markers = {
-                enable = true,
-            }}
+            renderer = {indent_markers = {enable = true}},
+            tab = {sync = {open = true, close = true}},
+            hijack_cursor = true,
+            sync_root_with_cwd = true,
         })
     end},
 
