@@ -26,14 +26,7 @@ return {
         require('plugin_config.telescope')
     end},
 
-    'vim-syntastic/syntastic',
     'mg979/vim-visual-multi',
-
-    {'skywind3000/vim-auto-popmenu', config = function()
-        vim.g.apc_enable_ft = {c = 1, cpp = 1, lua = 1, python = 1}
-        vim.opt.completeopt = "menu,menuone,noselect"
-        vim.opt.shortmess:append('c')
-    end},
 
     {'folke/tokyonight.nvim', config = function()
         vim.cmd.colorscheme('tokyonight-day')
@@ -64,4 +57,19 @@ return {
     {'neovim/nvim-lspconfig', config = function()
         require('plugin_config.lspconfig')
     end},
+
+    {"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*", config = function()
+        require('plugin_config.luasnip')
+    end},
+
+    {'hrsh7th/nvim-cmp', requires = {
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'quangnguyen30192/cmp-nvim-tags',
+        'saadparwaiz1/cmp_luasnip',
+    }, config = function()
+        require('plugin_config.cmp')
+    end},
+
 }
