@@ -22,6 +22,11 @@ cmp.setup{
     })
 }
 
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = "single",
+    focus = false,
+})
+
 vim.api.nvim_create_autocmd({'TextChangedI', 'TextChangedP'}, {callback = function()
     vim.lsp.buf.signature_help()
 end, pattern = "*"})
