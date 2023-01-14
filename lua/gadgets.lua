@@ -28,6 +28,7 @@ do -- tag preview
 end
 
 do -- auto tags
+    vim.loop.disable_stdio_inheritance()
     local running
     vim.api.nvim_create_autocmd('BufWritePost', {callback = function()
         if running then return end

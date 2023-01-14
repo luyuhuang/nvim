@@ -59,5 +59,9 @@ return {
             mode = 'tabs',
             max_name_length = 30,
         }}
-    end}
+    end},
+
+    {'neovim/nvim-lspconfig', config = function()
+        require('plugin_config.lspconfig')
+    end},
 }

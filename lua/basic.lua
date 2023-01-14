@@ -71,6 +71,8 @@ vim.g.mapleader = ' '
 for i = 1, 9 do
     vim.keymap.set('n', '<leader>' .. i, i .. 'gt')
 end
+vim.keymap.set('n', '<leader>j', 'gT')
+vim.keymap.set('n', '<leader>k', 'gt')
 
 vim.keymap.set('n', '<leader>t', '<C-W>T')
 vim.keymap.set('n', '<leader>o', '<C-W>o')
