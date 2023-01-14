@@ -128,6 +128,7 @@ end)
 vim.api.nvim_create_user_command('Glg', "Telescope git_commits", {})
 vim.api.nvim_create_user_command('Glgb', "Telescope git_bcommits", {})
 vim.api.nvim_create_user_command('Gst', "Telescope git_status", {})
+vim.api.nvim_create_user_command('Diag', 'Telescope diagnostics', {})
 vim.api.nvim_create_user_command('Tags', function(opts)
     if opts.args and opts.args ~= '' then
         awk_tags({
