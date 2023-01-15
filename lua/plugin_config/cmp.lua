@@ -9,9 +9,12 @@ cmp.setup{
     },
     mapping = cmp.mapping.preset.insert({
         ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
         ['<C-j>'] = cmp.mapping.select_next_item(),
         ['<C-k>'] = cmp.mapping.select_prev_item(),
-        ['<CR>'] = cmp.mapping.confirm({select = true}),
+        ['<down>'] = cmp.mapping.select_next_item(),
+        ['<up>'] = cmp.mapping.select_prev_item(),
+        ['<CR>'] = cmp.mapping.confirm(),
     }),
     sources = cmp.config.sources({
         {name = 'nvim_lsp'},
@@ -22,11 +25,3 @@ cmp.setup{
     })
 }
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "single",
-    focus = false,
-})
-
-vim.api.nvim_create_autocmd({'TextChangedI', 'TextChangedP'}, {callback = function()
-    vim.lsp.buf.signature_help()
-end, pattern = "*"})

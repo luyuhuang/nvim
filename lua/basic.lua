@@ -22,6 +22,7 @@ vim.opt.ttimeout = true
 vim.opt.ttimeoutlen = 10
 vim.opt.mouse=''
 vim.opt.termguicolors = true
+vim.opt.updatetime = 300
 
 vim.opt.foldenable = true
 vim.opt.fdm = 'indent'

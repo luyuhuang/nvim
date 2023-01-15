@@ -72,4 +72,14 @@ return {
         require('plugin_config.cmp')
     end},
 
+    {'nvim-treesitter/nvim-treesitter', opt = true, event = "BufReadPost", run = function()
+        local ts_update = require('nvim-treesitter.install').update({with_sync = true})
+        ts_update()
+    end, config = function()
+        require('nvim-treesitter.configs').setup{
+            ensure_installed = {'c', 'cpp', 'lua', 'python'},
+            highlight = {enable = true},
+        }
+    end},
+
 }
