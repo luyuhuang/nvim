@@ -53,7 +53,10 @@ actions.select_horizontal._static_post.select_horizontal = post
 actions.select_vertical._static_post.select_vertical = post
 actions.select_tab._static_post.select_tab = post
 
-telescope.setup{defaults = {file_sorter = sorter}}
+telescope.setup{defaults = {
+    file_sorter = sorter,
+    layout_strategy = 'vertical',
+}}
 
 local function set_opts(opts)
     opts = opts or {}
@@ -125,17 +128,18 @@ vim.keymap.set('n', 'go', function()
     builtin.find_files({default_text = vim.fn.getreg('"f')})
 end)
 
-vim.api.nvim_create_user_command('Glg', "Telescope git_commits", {})
-vim.api.nvim_create_user_command('Glgb', "Telescope git_bcommits", {})
-vim.api.nvim_create_user_command('Gst', "Telescope git_status", {})
-vim.api.nvim_create_user_command('Diag', 'Telescope diagnostics', {})
+vim.api.nvim_create_user_command('Glg', function() builtin.git_commits{initial_mode = 'normal'} end, {})
+vim.api.nvim_create_user_command('Glgb', function() builtin.git_bcommits{initial_mode = 'normal'} end, {})
+vim.api.nvim_create_user_command('Gst', function() builtin.git_status{initial_mode = 'normal'} end, {})
+vim.api.nvim_create_user_command('Diag', function() builtin.diagnostics{initial_mode = 'normal'} end, {})
 vim.api.nvim_create_user_command('Tags', function(opts)
     if opts.args and opts.args ~= '' then
         awk_tags({
+            fname_width = 0.4,
             prompt_title = string.format('Tags ~ %q', opts.args),
             awk = string.format('$1 ~ %q{print $0}', opts.args)
         })
     else
-        builtin.tags()
+        builtin.tags({fname_width = 0.4})
     end
 end, {nargs = '?'})

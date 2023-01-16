@@ -15,12 +15,29 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 })
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
 
+local function uri_exists(uri)
+    for _, win in ipairs(vim.fn.getwininfo()) do
+        if vim.lsp.util.make_text_document_params(win.bufnr).uri == uri then
+            return true
+        end
+    end
+    return false
+end
+
+vim.lsp.handlers['textDocument/definition'] = function(_, result, ctx, config)
+    local res = result[1]
+    if res.uri ~= ctx.params.textDocument.uri and not uri_exists(res.uri) then
+        vim.cmd.tabedit()
+    end
+    local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
+    vim.lsp.util.jump_to_location(res, offset_encoding, true)
+end
+
 local function on_attach(client, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     local bufopts = {noremap=true, silent=true, buffer=bufnr}
-    vim.keymap.set('n', '<C-o>', builtin.lsp_document_symbols, bufopts)
-    vim.keymap.set('n', 'gd', function() builtin.lsp_definitions{jump_type = 'never'} end, bufopts)
-    vim.keymap.set('n', '<C-]>', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', '<C-o>', function() builtin.lsp_document_symbols{symbol_width = 0.8} end, bufopts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'g]', function() builtin.lsp_definitions{jump_type = 'never'} end, bufopts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
     vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, bufopts)
