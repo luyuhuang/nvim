@@ -1,5 +1,8 @@
 vim.keymap.set('n', '<F3>', '<Cmd>NvimTreeFindFileToggle<CR>')
 
+vim.keymap.set('n', '<leader>h', '<Cmd>HopWord<CR>', {silent = true})
+vim.keymap.set('n', '<leader>H', '<Cmd>HopLine<CR>', {silent = true})
+
 return {
     {'lewis6991/gitsigns.nvim', config = function()
         require('plugin_config.gitsigns')
@@ -80,6 +83,12 @@ return {
             ensure_installed = {'c', 'cpp', 'lua', 'python'},
             highlight = {enable = true},
         }
+    end},
+
+    {'phaazon/hop.nvim', branch = 'v2', opt = true, cmd = {
+        'HopWord', 'HopLine',
+    }, config = function()
+        require('hop').setup()
     end},
 
 }

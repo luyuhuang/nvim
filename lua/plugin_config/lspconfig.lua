@@ -64,3 +64,7 @@ end
 if vim.fn.executable('clangd') == 1 then
     lspconfig.clangd.setup{on_attach = on_attach, capabilities = capabilities}
 end
+
+if vim.fn.executable('gopls') == 1 then
+    lspconfig.gopls.setup{on_attach = on_attach, capabilities = capabilities}
+end

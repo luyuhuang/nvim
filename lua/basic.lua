@@ -4,7 +4,6 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.autoindent = true
 vim.opt.cindent = true
@@ -20,6 +19,7 @@ vim.opt.scrolloff = 3
 vim.opt.backspace = 'indent,eol,start'
 vim.opt.ttimeout = true
 vim.opt.ttimeoutlen = 10
+vim.opt.timeoutlen = 300
 vim.opt.mouse=''
 vim.opt.termguicolors = true
 vim.opt.updatetime = 300
@@ -62,9 +62,7 @@ vim.keymap.set('i', '<C-j>', '<down>')
 vim.keymap.set('i', '<C-k>', '<up>')
 vim.keymap.set('i', '<C-l>', '<right>')
 
-vim.keymap.set('i', '<C-v>', function()
-    return vim.fn.col('.') == 1 and '<Esc>"cPa' or '<Esc>"cpa'
-end, {expr = true})
+vim.keymap.set({'i', 'c'}, '<C-v>', '<C-r>c')
 vim.keymap.set('v', '<C-v>', '"cp')
 vim.keymap.set('v', '<C-c>', '"cy')
 

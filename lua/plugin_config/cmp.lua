@@ -1,7 +1,10 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 
+vim.opt.completeopt = 'menu,menuone,noselect'
+
 cmp.setup{
+    completion = {keyword_length = 3},
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
