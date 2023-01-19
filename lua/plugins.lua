@@ -2,6 +2,7 @@ vim.keymap.set('n', '<F3>', '<Cmd>NvimTreeFindFileToggle<CR>')
 
 vim.keymap.set('n', '<leader>h', '<Cmd>HopWord<CR>', {silent = true})
 vim.keymap.set('n', '<leader>H', '<Cmd>HopLine<CR>', {silent = true})
+vim.keymap.set('n', '<leader>f', '<Cmd>HopWordCurrentLine<CR>', {silent = true})
 
 return {
     {'lewis6991/gitsigns.nvim', config = function()
@@ -86,7 +87,7 @@ return {
     end},
 
     {'phaazon/hop.nvim', branch = 'v2', opt = true, cmd = {
-        'HopWord', 'HopLine',
+        'HopWord', 'HopLine', 'HopWordCurrentLine',
     }, config = function()
         require('hop').setup()
     end},

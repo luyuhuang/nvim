@@ -104,7 +104,7 @@ local function grep_tags(opts)
     return awk_tags(opts)
 end
 
-vim.keymap.set('n', '<leader>f', builtin.live_grep)
+vim.keymap.set('n', '<leader>s', builtin.live_grep)
 vim.keymap.set('n', '<C-p>', builtin.find_files)
 vim.keymap.set('n', '<C-o>', current_buffer_tags)
 vim.keymap.set('n', 'gd', function()
