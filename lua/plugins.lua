@@ -5,12 +5,14 @@ vim.keymap.set('n', '<leader>H', '<Cmd>HopLine<CR>', {silent = true})
 vim.keymap.set('n', '<leader>f', '<Cmd>HopWordCurrentLine<CR>', {silent = true})
 
 return {
-    {'lewis6991/gitsigns.nvim', config = function()
+    {'petertriho/nvim-scrollbar', event = 'BufReadPost', config = function()
+        require('scrollbar').setup()
+    end},
+    {'lewis6991/gitsigns.nvim', after = 'nvim-scrollbar', config = function()
         require('plugin_config.gitsigns')
     end},
-
-    {"kevinhwang91/nvim-hlslens", config = function()
-        require("scrollbar.handlers.search").setup{
+    {'kevinhwang91/nvim-hlslens', after = 'nvim-scrollbar', config = function()
+        require('scrollbar.handlers.search').setup{
             nearest_only = true,
         }
         local opts = {noremap = true, silent = true}
@@ -18,9 +20,6 @@ return {
         vim.keymap.set('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], opts)
         vim.keymap.set('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
         vim.keymap.set('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
-    end},
-    {"petertriho/nvim-scrollbar", config = function()
-        require("scrollbar").setup()
     end},
 
     {'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = {
@@ -30,7 +29,7 @@ return {
         require('plugin_config.telescope')
     end},
 
-    'mg979/vim-visual-multi',
+    {'mg979/vim-visual-multi', event = 'BufReadPost'},
 
     {'folke/tokyonight.nvim', config = function()
         vim.cmd.colorscheme('tokyonight-day')
@@ -42,8 +41,8 @@ return {
     end},
 
     'kyazdani42/nvim-web-devicons',
-    {'nvim-tree/nvim-tree.lua', opt = true, cmd = {'NvimTreeFindFileToggle'}, config = function()
-        require("nvim-tree").setup({
+    {'nvim-tree/nvim-tree.lua', cmd = 'NvimTreeFindFileToggle', config = function()
+        require('nvim-tree').setup({
             renderer = {indent_markers = {enable = true}},
             tab = {sync = {open = true, close = true}},
             hijack_cursor = true,
@@ -51,32 +50,32 @@ return {
         })
     end},
 
-    {'akinsho/bufferline.nvim', opt = true, event = 'BufReadPost', config = function()
-        require("bufferline").setup{options = {
+    {'akinsho/bufferline.nvim', event = 'BufReadPost', config = function()
+        require('bufferline').setup{options = {
             mode = 'tabs',
             max_name_length = 30,
         }}
     end},
 
-    {'neovim/nvim-lspconfig', config = function()
-        require('plugin_config.lspconfig')
-    end},
-
-    {"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*", config = function()
+    {'L3MON4D3/LuaSnip', tag = 'v<CurrentMajor>.*', config = function()
         require('plugin_config.luasnip')
     end},
 
-    {'hrsh7th/nvim-cmp', requires = {
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'quangnguyen30192/cmp-nvim-tags',
-        'saadparwaiz1/cmp_luasnip',
+    {'hrsh7th/nvim-cmp', event = 'BufReadPre', requires = {
+        {'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp'},
+        {'hrsh7th/cmp-buffer', after = 'nvim-cmp'},
+        {'hrsh7th/cmp-path', after = 'nvim-cmp'},
+        {'quangnguyen30192/cmp-nvim-tags', after = 'nvim-cmp'},
+        {'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp'},
     }, config = function()
         require('plugin_config.cmp')
     end},
 
-    {'nvim-treesitter/nvim-treesitter', opt = true, event = "BufReadPost", run = function()
+    {'neovim/nvim-lspconfig', after = 'cmp-nvim-lsp', config = function()
+        require('plugin_config.lspconfig')
+    end},
+
+    {'nvim-treesitter/nvim-treesitter', event = 'BufReadPost', run = function()
         local ts_update = require('nvim-treesitter.install').update({with_sync = true})
         ts_update()
     end, config = function()
@@ -86,10 +85,11 @@ return {
         }
     end},
 
-    {'phaazon/hop.nvim', branch = 'v2', opt = true, cmd = {
+    {'phaazon/hop.nvim', branch = 'v2', cmd = {
         'HopWord', 'HopLine', 'HopWordCurrentLine',
     }, config = function()
         require('hop').setup()
     end},
 
+    {'dstein64/vim-startuptime', cmd = 'StartupTime'},
 }
