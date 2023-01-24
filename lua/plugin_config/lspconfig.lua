@@ -25,12 +25,13 @@ local function uri_exists(uri)
 end
 
 vim.lsp.handlers['textDocument/definition'] = function(_, result, ctx, config)
-    local res = result[1]
-    if res.uri ~= ctx.params.textDocument.uri and not uri_exists(res.uri) then
+    if vim.tbl_islist(result) then result = result[1] end
+    if not result then return end
+    if result.uri ~= ctx.params.textDocument.uri and not uri_exists(result.uri) then
         vim.cmd.tabedit()
     end
     local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
-    vim.lsp.util.jump_to_location(res, offset_encoding, true)
+    vim.lsp.util.jump_to_location(result, offset_encoding, true)
 end
 
 local function on_attach(client, bufnr)
