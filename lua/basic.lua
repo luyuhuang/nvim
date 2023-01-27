@@ -77,3 +77,4 @@ vim.keymap.set('n', '<leader>t', '<C-W>T')
 vim.keymap.set('n', '<leader>o', '<C-W>o')
 vim.keymap.set('n', '<leader>l', ':nohl<CR>', {silent = true})
 
+vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')

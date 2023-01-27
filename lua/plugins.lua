@@ -4,6 +4,8 @@ vim.keymap.set('n', '<leader>h', '<Cmd>HopWord<CR>', {silent = true})
 vim.keymap.set('n', '<leader>H', '<Cmd>HopLine<CR>', {silent = true})
 vim.keymap.set('n', '<leader>f', '<Cmd>HopWordCurrentLine<CR>', {silent = true})
 
+vim.keymap.set({'n', 't'}, '<C-t>', function() vim.cmd(vim.v.count1 .. 'ToggleTerm') end, {silent = true})
+
 return {
     {'petertriho/nvim-scrollbar', event = 'BufReadPost', config = function()
         require('scrollbar').setup()
@@ -92,4 +94,8 @@ return {
     end},
 
     {'dstein64/vim-startuptime', cmd = 'StartupTime'},
+
+    {'akinsho/toggleterm.nvim', cmd = 'ToggleTerm', config = function()
+        require("toggleterm").setup()
+    end},
 }
