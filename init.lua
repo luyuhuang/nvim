@@ -1,3 +1,3 @@
 require("basic")
-require("pack")
+require("laziness")
 require("gadgets")
