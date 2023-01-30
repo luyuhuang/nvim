@@ -59,7 +59,7 @@ return {
         }}
     end},
 
-    {'L3MON4D3/LuaSnip', tag = 'v<CurrentMajor>.*', config = function()
+    {'L3MON4D3/LuaSnip', tag = 'v*', config = function()
         require('plugin_config.luasnip')
     end},
 
@@ -97,5 +97,9 @@ return {
 
     {'akinsho/toggleterm.nvim', cmd = 'ToggleTerm', config = function()
         require("toggleterm").setup()
+    end},
+
+    {'windwp/nvim-autopairs', event = 'InsertEnter', config = function()
+        require('nvim-autopairs').setup{map_bs = true}
     end},
 }

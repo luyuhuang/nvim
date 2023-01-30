@@ -82,3 +82,7 @@ do
         end
     end})
 end
+
+do
+    vim.api.nvim_create_autocmd({'BufEnter', 'FocusGained'}, {command = 'checktime'})
+end
