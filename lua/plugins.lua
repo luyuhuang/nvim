@@ -114,4 +114,6 @@ return {
     {'windwp/nvim-autopairs', event = 'InsertEnter', config = function()
         require('nvim-autopairs').setup{map_bs = true}
     end},
+
+    {'nmac427/guess-indent.nvim', event = 'BufReadPost', name = 'guess-indent', opts = {auto_cmd = true}},
 }
