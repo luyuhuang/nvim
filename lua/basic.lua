@@ -62,10 +62,10 @@ vim.keymap.set('i', '<C-j>', '<down>')
 vim.keymap.set('i', '<C-k>', '<up>')
 vim.keymap.set('i', '<C-l>', '<right>')
 
-vim.keymap.set({'i', 'c'}, '<C-v>', '<C-r>c')
-vim.keymap.set('v', '<C-v>', '"cp')
-vim.keymap.set('t', '<C-v>', '<C-\\><C-n>"cpa')
-vim.keymap.set('v', '<C-c>', '"cy')
+vim.keymap.set({'i', 'c'}, '<C-v>', '<C-r>+')
+vim.keymap.set('v', '<C-v>', '"+p')
+vim.keymap.set('t', '<C-v>', '<C-\\><C-n>"+pa')
+vim.keymap.set('v', '<C-c>', '"+y')
 
 vim.keymap.set({'n', 'i'}, '<C-s>', '<Cmd>w<CR>')
 

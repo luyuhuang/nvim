@@ -10,10 +10,10 @@ configs.luahelper = { default_config = {
 }}
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "single",
+    border = "rounded",
     focus = false,
 })
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"})
 
 local function uri_exists(uri)
     for _, win in ipairs(vim.fn.getwininfo()) do
@@ -33,6 +33,8 @@ vim.lsp.handlers['textDocument/definition'] = function(_, result, ctx, config)
     local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
     vim.lsp.util.jump_to_location(result, offset_encoding, true)
 end
+
+require('lspconfig.ui.windows').default_options.border = 'rounded'
 
 local function on_attach(client, bufnr)
     local bufopts = {noremap=true, silent=true, buffer=bufnr}

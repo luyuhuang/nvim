@@ -54,6 +54,11 @@ actions.select_vertical._static_post.select_vertical = post
 actions.select_tab._static_post.select_tab = post
 
 telescope.setup{defaults = {
+    mappings = {
+        i = {
+            ['<C-v>'] = false
+        }
+    },
     file_sorter = sorter,
     layout_strategy = 'vertical',
     layout_config = {vertical = {preview_cutoff = 30}},

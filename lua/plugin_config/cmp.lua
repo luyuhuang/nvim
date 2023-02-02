@@ -28,3 +28,25 @@ cmp.setup{
     })
 }
 
+cmp.setup.cmdline({ '/', '?' }, {
+    completion = {keyword_length = 3},
+    window = {completion = cmp.config.window.bordered()},
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        {name = 'buffer'}
+    }
+})
+
+cmp.setup.cmdline(':', {
+    completion = {keyword_length = 2},
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        {name = 'path'}
+    }, {
+        {name = 'cmdline'}
+    })
+})

@@ -88,21 +88,14 @@ do
 end
 
 if vim.env.TMUX then
-    vim.api.nvim_create_autocmd('TextYankPost', {callback = function()
-        local reg = vim.v.event.regname
-        if reg == 'c' then
-            vim.fn.system('tmux load-buffer -w -', vim.fn.getreg(reg))
-        end
-    end})
-
-    local last_buf
-    local function update_from_tmux()
-        local buf = vim.fn.systemlist('tmux list-buffers -F"#{buffer_name}"')[1]
-        if buf ~= last_buf then
-            vim.fn.setreg('c', vim.fn.system('tmux show-buffer'))
-        end
-        last_buf = buf
-    end
-    vim.api.nvim_create_autocmd('FocusLost', {callback = update_from_tmux})
-    vim.api.nvim_create_autocmd('FocusGained', {callback = update_from_tmux})
+    vim.g.clipboard = {
+        name = 'tmux-clipboard',
+        copy = {
+            ['+'] = {'tmux', 'load-buffer', '-w', '-'},
+        },
+        paste = {
+            ['+'] = {'tmux', 'save-buffer', '-'},
+        },
+        cache_enabled = true,
+    }
 end
