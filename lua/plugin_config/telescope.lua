@@ -134,8 +134,9 @@ vim.keymap.set('n', 'go', function()
     builtin.find_files({default_text = vim.fn.getreg('"f')})
 end)
 
-vim.api.nvim_create_user_command('Glg', function() builtin.git_commits{initial_mode = 'normal'} end, {})
-vim.api.nvim_create_user_command('Glgb', function() builtin.git_bcommits{initial_mode = 'normal'} end, {})
+local git_log = {'git', 'log', '--pretty=format:%h %s (%ci) <%an>\n'}
+vim.api.nvim_create_user_command('Glg', function() builtin.git_commits{initial_mode = 'normal', git_command = git_log} end, {})
+vim.api.nvim_create_user_command('Glgb', function() builtin.git_bcommits{initial_mode = 'normal', git_command = git_log} end, {})
 vim.api.nvim_create_user_command('Gst', function() builtin.git_status{initial_mode = 'normal'} end, {})
 vim.api.nvim_create_user_command('Diag', function() builtin.diagnostics{initial_mode = 'normal'} end, {})
 vim.api.nvim_create_user_command('Tags', function(opts)
