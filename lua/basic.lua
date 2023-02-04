@@ -41,8 +41,6 @@ vim.opt.shiftwidth = 4
 
 vim.keymap.set('n', '<C-h>', '<C-o>', {noremap = true})
 vim.keymap.set('n', '<C-l>', '<C-i>', {noremap = true})
-vim.keymap.set('n', '<C-j>', ':tabm -1<CR>', {silent = true})
-vim.keymap.set('n', '<C-k>', ':tabm +1<CR>', {silent = true})
 
 local function search_reg(dir, reg)
     local origin = vim.fn.getreg(reg or '"')
@@ -70,14 +68,8 @@ vim.keymap.set('v', '<C-c>', '"+y')
 vim.keymap.set({'n', 'i'}, '<C-s>', '<Cmd>w<CR>')
 
 vim.g.mapleader = ' '
-for i = 1, 9 do
-    vim.keymap.set('n', '<leader>' .. i, i .. 'gt')
-end
-vim.keymap.set('n', '<leader>j', 'gT')
-vim.keymap.set('n', '<leader>k', 'gt')
 
-vim.keymap.set('n', '<leader>t', '<C-W>T')
 vim.keymap.set('n', '<leader>o', '<C-W>o')
-vim.keymap.set('n', '<leader>l', ':nohl<CR>', {silent = true})
+vim.keymap.set('n', '<leader>l', '<Cmd>nohl<CR>')
 
 vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')

@@ -39,6 +39,7 @@ return {
     end},
     {'nvim-lualine/lualine.nvim', config = function()
         require('lualine').setup{
+            options = {globalstatus = true},
             sections = {lualine_c = {{'filename', path = 1}}},
         }
     end},
@@ -49,7 +50,6 @@ return {
     }, config = function()
         require('nvim-tree').setup{
             renderer = {indent_markers = {enable = true}},
-            tab = {sync = {open = true, close = true}},
             hijack_cursor = true,
             sync_root_with_cwd = true,
             view = {mappings = {list = {
@@ -61,10 +61,7 @@ return {
     end},
 
     {'akinsho/bufferline.nvim', event = 'BufReadPost', config = function()
-        require('bufferline').setup{options = {
-            mode = 'tabs',
-            max_name_length = 30,
-        }}
+        require('plugin_config.bufferline')
     end},
 
     {'L3MON4D3/LuaSnip', event = 'InsertEnter', version = '*', config = function()
