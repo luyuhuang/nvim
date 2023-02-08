@@ -1,4 +1,5 @@
 local bufferline = require('bufferline')
+local utils = require('utils')
 
 bufferline.setup{options = {
     mode = 'buffers',
@@ -21,4 +22,11 @@ vim.keymap.set('n', 'gT', '<Cmd>BufferLineCyclePrev<CR>')
 vim.keymap.set('n', 'gt', '<Cmd>BufferLineCycleNext<CR>')
 vim.keymap.set('n', '<C-j>', '<Cmd>BufferLineMovePrev<CR>')
 vim.keymap.set('n', '<C-k>', '<Cmd>BufferLineMoveNext<CR>')
-vim.keymap.set('n', 'ZZ', '<Cmd>bdelete<CR>')
+vim.keymap.set('n', 'ZZ', function()
+    if vim.bo.modified then
+        vim.cmd.write()
+    end
+    local buf = vim.fn.bufnr()
+    bufferline.cycle(-1)
+    vim.cmd.bdelete(buf)
+end)
