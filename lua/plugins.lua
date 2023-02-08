@@ -1,4 +1,5 @@
 local utils = require('utils')
+
 return {
     {'petertriho/nvim-scrollbar', event = 'BufReadPost', config = function()
         require('scrollbar').setup()
@@ -32,9 +33,19 @@ return {
         require('plugin_config.telescope')
     end},
 
-    {'mg979/vim-visual-multi', event = 'BufReadPost'},
+    {'mg979/vim-visual-multi', keys = {'<C-n>', '<C-Down>', '<C-Up>'}, config = function()
+        vim.g.VM_maps = {['I BS'] = ''}
+        vim.g.VM_silent_exit = 1
+        vim.g.VM_plugins_compatibilty = {['lualine.nvim'] = {
+            test = function() return true end,
+            enable = 'lua require("lualine").hide{unhide = true}',
+            disable = 'lua require("lualine").hide()',
+        }}
+        vim.g.VM_Mono_hl = 'Cursor'
+        vim.g.VM_Extend_hl  = 'Visual'
+    end},
 
-    {'folke/tokyonight.nvim', config = function()
+    {'folke/tokyonight.nvim', dependencies = 'nvim-lualine/lualine.nvim', config = function()
         vim.cmd.colorscheme('tokyonight-day')
     end},
     {'nvim-lualine/lualine.nvim', config = function()
@@ -114,4 +125,11 @@ return {
     end},
 
     {'nmac427/guess-indent.nvim', event = 'BufReadPost', name = 'guess-indent', opts = {auto_cmd = true}},
+
+    {'terrortylor/nvim-comment', keys = {
+        {'<C-_>', '<Cmd>CommentToggle<CR>', mode = 'n'},
+        {'<C-_>', ':CommentToggle<CR>', mode = 'v'},
+    }, name = 'nvim_comment', opts = {create_mappings = false}},
+
+    {'junegunn/vim-easy-align', keys = {{'ga', '<Plug>(EasyAlign)', mode = 'x'}}},
 }

@@ -20,9 +20,9 @@ require('lspconfig.ui.windows').default_options.border = 'rounded'
 local function on_attach(client, bufnr)
     local bufopts = {noremap=true, silent=true, buffer=bufnr}
     vim.keymap.set('n', '<C-o>', function() builtin.lsp_document_symbols{symbol_width = 0.8} end, bufopts)
-    vim.keymap.set('n', 'gd', builtin.lsp_definitions, bufopts)
+    vim.keymap.set('n', 'gd', function() builtin.lsp_definitions{fname_width = 0.4} end, bufopts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
+    vim.keymap.set('n', 'gr', function() builtin.lsp_references{fname_width = 0.4} end, bufopts)
     vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, bufopts)
 
     vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {callback = vim.lsp.buf.document_highlight, buffer = bufnr})

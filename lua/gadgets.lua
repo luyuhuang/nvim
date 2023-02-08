@@ -91,3 +91,10 @@ if vim.env.TMUX then
         cache_enabled = true,
     }
 end
+
+do
+    local function cmt(c)
+        return function() vim.bo.commentstring = c end
+    end
+    vim.api.nvim_create_autocmd('FileType', {pattern = {'cpp', 'c'}, callback = cmt('// %s')})
+end
