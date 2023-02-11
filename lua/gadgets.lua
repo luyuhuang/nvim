@@ -98,3 +98,15 @@ do
     end
     vim.api.nvim_create_autocmd('FileType', {pattern = {'cpp', 'c'}, callback = cmt('// %s')})
 end
+
+do
+    local function home()
+        local head = (vim.api.nvim_get_current_line():find('[^%s]') or 1) - 1
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        cursor[2] = cursor[2] == head and 0 or head
+        vim.api.nvim_win_set_cursor(0, cursor)
+    end
+
+    vim.keymap.set({'i', 'n'}, '<Home>', home)
+    vim.keymap.set('n', '0', home)
+end

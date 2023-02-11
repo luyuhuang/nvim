@@ -110,6 +110,7 @@ local function grep_tags(opts)
 end
 
 vim.keymap.set('n', '<leader>s', function() builtin.live_grep(utils.live_grep_opts{}) end)
+vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find)
 vim.keymap.set('n', '<C-p>', builtin.find_files)
 vim.keymap.set('n', '<C-o>', current_buffer_tags)
 vim.keymap.set('n', 'gd', function()
@@ -135,8 +136,16 @@ vim.keymap.set('n', 'go', function()
 end)
 
 local git_log = {'git', 'log', '--pretty=format:%h %s (%ci) <%an>\n'}
-vim.api.nvim_create_user_command('Glg', function() builtin.git_commits{initial_mode = 'normal', git_command = git_log} end, {})
-vim.api.nvim_create_user_command('Glgb', function() builtin.git_bcommits{initial_mode = 'normal', git_command = git_log} end, {})
+vim.api.nvim_create_user_command('Glg', function(opts)
+    local commit = opts.args ~= '' and opts.args or nil
+    builtin.git_commits{initial_mode = 'normal', git_command = vim.tbl_flatten{git_log, commit}}
+end, {nargs = '?'})
+
+vim.api.nvim_create_user_command('Glgb', function(opts)
+    local commit = opts.args ~= '' and opts.args or nil
+    builtin.git_bcommits{initial_mode = 'normal', git_command = vim.tbl_flatten{git_log, commit}}
+end, {nargs = '?'})
+
 vim.api.nvim_create_user_command('Gst', function() builtin.git_status{initial_mode = 'normal'} end, {})
 vim.api.nvim_create_user_command('Diag', function() builtin.diagnostics{initial_mode = 'normal'} end, {})
 vim.api.nvim_create_user_command('Tags', function(opts)
