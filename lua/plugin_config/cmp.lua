@@ -5,6 +5,7 @@ vim.opt.completeopt = 'menu,menuone,noselect'
 
 cmp.setup{
     completion = {keyword_length = 3},
+    preselect = cmp.PreselectMode.None,
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)

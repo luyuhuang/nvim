@@ -33,7 +33,7 @@ return {
         require('plugin_config.telescope')
     end},
 
-    {'mg979/vim-visual-multi', keys = {'<C-n>', '<C-Down>', '<C-Up>'}, config = function()
+    {'mg979/vim-visual-multi', keys = {{'<C-n>', mode = {'n', 'v'}}, '<C-Down>', '<C-Up>'}, config = function()
         vim.g.VM_maps = {['I BS'] = ''}
         vim.g.VM_silent_exit = 1
         vim.g.VM_plugins_compatibilty = {['lualine.nvim'] = {
