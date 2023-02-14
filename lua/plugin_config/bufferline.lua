@@ -1,6 +1,10 @@
 local bufferline = require('bufferline')
 local utils = require('utils')
 
+local hide = {
+    qf = true,
+}
+
 bufferline.setup{options = {
     mode = 'buffers',
     max_name_length = 30,
@@ -10,6 +14,9 @@ bufferline.setup{options = {
         highlight = 'Directory',
         padding = 1,
     }},
+    custom_filter = function(bufnr)
+        return not hide[vim.bo[bufnr].filetype]
+    end
 }}
 
 for i = 1, 9 do
