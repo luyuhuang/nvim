@@ -110,3 +110,21 @@ do
     vim.keymap.set({'i', 'n'}, '<Home>', home)
     vim.keymap.set('n', '0', home)
 end
+
+do
+    vim.opt.sessionoptions = 'buffers,curdir,tabpages,winsize'
+    local path = vim.fn.expand(vim.fn.stdpath('state') .. '/sessions/')
+
+    vim.api.nvim_create_autocmd('VimLeavePre', {callback = function()
+        vim.fn.mkdir(path, 'p')
+        vim.cmd('mks! ' .. path .. vim.fn.sha256(vim.fn.getcwd()) .. '.vim')
+    end})
+
+    vim.api.nvim_create_user_command('Resume', function()
+        local fname = path .. vim.fn.sha256(vim.fn.getcwd()) .. '.vim'
+        if vim.fn.filereadable(fname) ~= 0 then
+            vim.cmd.source(fname)
+            vim.cmd('Lazy load bufferline.nvim')
+        end
+    end, {})
+end

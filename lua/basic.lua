@@ -19,7 +19,6 @@ vim.opt.scrolloff = 3
 vim.opt.backspace = 'indent,eol,start'
 vim.opt.ttimeout = true
 vim.opt.ttimeoutlen = 10
-vim.opt.timeoutlen = 300
 vim.opt.mouse = ''
 vim.opt.termguicolors = true
 vim.opt.updatetime = 300
