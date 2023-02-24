@@ -17,6 +17,7 @@ vim.opt.lazyredraw = true
 vim.opt.autoread = true
 vim.opt.scrolloff = 3
 vim.opt.backspace = 'indent,eol,start'
+vim.opt.timeout = false
 vim.opt.ttimeout = true
 vim.opt.ttimeoutlen = 10
 vim.opt.mouse = ''
