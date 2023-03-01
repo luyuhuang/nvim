@@ -120,11 +120,15 @@ return {
         require("toggleterm").setup()
     end},
 
-    {'windwp/nvim-autopairs', event = 'InsertEnter', config = function()
-        require('nvim-autopairs').setup{map_bs = true}
-    end},
+    {'windwp/nvim-autopairs', event = 'InsertEnter', opts = {
+        map_bs = true,
+        disable_filetype = {'TelescopePrompt', 'scheme', 'lisp', 'racket'}
+    }},
 
-    {'nmac427/guess-indent.nvim', event = 'BufReadPost', name = 'guess-indent', opts = {auto_cmd = true}},
+    {'nmac427/guess-indent.nvim', event = 'BufReadPre', name = 'guess-indent', opts = {
+        auto_cmd = true,
+        filetype_exclude = {'scheme', 'lisp', 'racket'},
+    }},
 
     {'terrortylor/nvim-comment', keys = {
         {'<C-_>', '<Cmd>CommentToggle<CR>', mode = 'n'},
@@ -139,4 +143,6 @@ return {
         insert = false, insert_line = false, normal = false, normal_cur = false,
         normal_cur_line = false, visual_line = false, visual = 's',
     }}},
+
+    {'gpanders/nvim-parinfer', ft = {'scheme', 'lisp', 'racket'}},
 }

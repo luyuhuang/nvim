@@ -39,6 +39,11 @@ end)
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
+vim.api.nvim_create_autocmd('FileType', {pattern = {'scheme', 'lisp', 'racket', 'yaml'}, callback = function()
+    vim.bo.tabstop = 2
+    vim.bo.softtabstop = 2
+    vim.bo.shiftwidth = 2
+end})
 
 vim.keymap.set('n', '<C-h>', '<C-o>', {noremap = true})
 vim.keymap.set('n', '<C-l>', '<C-i>', {noremap = true})
