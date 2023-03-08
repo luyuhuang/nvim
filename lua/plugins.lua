@@ -57,7 +57,7 @@ return {
 
     'kyazdani42/nvim-web-devicons',
     {'nvim-tree/nvim-tree.lua', keys = {
-        {'<F3>', '<Cmd>NvimTreeFindFileToggle<CR>', mode = 'n'},
+        {'<F3>', '<Cmd>NvimTreeFindFileToggle<CR>', mode = {'n', 'i', 't'}},
     }, config = function()
         require('nvim-tree').setup{
             renderer = {indent_markers = {enable = true}},
