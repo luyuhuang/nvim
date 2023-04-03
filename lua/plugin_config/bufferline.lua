@@ -8,6 +8,7 @@ local hide = {
 bufferline.setup{options = {
     mode = 'buffers',
     max_name_length = 30,
+    sort_by = 'insert_after_current',
     offsets = {{
         filetype = 'NvimTree',
         text = 'File Explorer',
