@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 return {
     {'petertriho/nvim-scrollbar', event = 'BufReadPost', config = function()
         require('scrollbar').setup()
@@ -59,16 +57,7 @@ return {
     {'nvim-tree/nvim-tree.lua', keys = {
         {'<F3>', '<Cmd>NvimTreeFindFileToggle<CR>', mode = {'n', 'i', 't'}},
     }, config = function()
-        require('nvim-tree').setup{
-            renderer = {indent_markers = {enable = true}},
-            hijack_cursor = true,
-            sync_root_with_cwd = true,
-            view = {mappings = {list = {
-                {key = 'gs', action = 'live grep', action_cb = function(node)
-                    require('telescope.builtin').live_grep(utils.live_grep_opts{search_dirs = {node.absolute_path}})
-                end},
-            }}}
-        }
+        require('plugin_config.tree')
     end},
 
     {'akinsho/bufferline.nvim', event = 'BufReadPost', config = function()
