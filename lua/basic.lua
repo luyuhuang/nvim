@@ -24,6 +24,7 @@ vim.opt.mouse = ''
 vim.opt.termguicolors = true
 vim.opt.updatetime = 300
 vim.opt.showmode = false
+vim.opt.fileencodings = 'ucs-bom,utf-8,default,gbk,latin1'
 
 vim.opt.foldenable = true
 vim.opt.fdm = 'indent'

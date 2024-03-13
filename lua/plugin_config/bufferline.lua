@@ -38,3 +38,7 @@ vim.keymap.set('n', 'ZZ', function()
     bufferline.cycle(-1)
     vim.cmd.bdelete(buf)
 end)
+
+
+vim.api.nvim_create_user_command('CL', 'BufferLineCloseLeft', {})
+vim.api.nvim_create_user_command('CR', 'BufferLineCloseRight', {})
