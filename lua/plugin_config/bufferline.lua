@@ -8,7 +8,7 @@ local hide = {
 bufferline.setup{options = {
     mode = 'buffers',
     max_name_length = 30,
-    sort_by = 'insert_after_current',
+    sort_by = 'none',
     offsets = {{
         filetype = 'NvimTree',
         text = 'File Explorer',
@@ -34,7 +34,7 @@ vim.keymap.set('n', 'ZZ', function()
     if vim.bo.modified then
         vim.cmd.write()
     end
-    vim.cmd.bwipeout()
+    vim.cmd.bdelete()
 end)
 
 

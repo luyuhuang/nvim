@@ -44,7 +44,11 @@ if vim.fn.executable('luahelper-lsp') == 1 then
     lspconfig.luahelper.setup{on_attach = on_attach, capabilities = capabilities}
 end
 
-if vim.fn.executable('clangd') == 1 then
+if vim.fn.executable('ccls') == 1 then
+    lspconfig.ccls.setup{on_attach = on_attach, capabilities = capabilities, init_options = {
+        index = {threads = 8},
+    }}
+elseif vim.fn.executable('clangd') == 1 then
     lspconfig.clangd.setup{on_attach = on_attach, capabilities = capabilities}
 end
 
