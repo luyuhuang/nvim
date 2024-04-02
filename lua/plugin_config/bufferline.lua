@@ -34,9 +34,7 @@ vim.keymap.set('n', 'ZZ', function()
     if vim.bo.modified then
         vim.cmd.write()
     end
-    local buf = vim.fn.bufnr()
-    bufferline.cycle(-1)
-    vim.cmd.bdelete(buf)
+    vim.cmd.bwipeout()
 end)
 
 

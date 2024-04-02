@@ -60,7 +60,7 @@ return {
         require('plugin_config.tree')
     end},
 
-    {'akinsho/bufferline.nvim', event = 'BufReadPost', config = function()
+    {'akinsho/bufferline.nvim', event = 'BufReadPost', version = '4.5.2^', config = function()
         require('plugin_config.bufferline')
     end},
 
