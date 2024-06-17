@@ -20,7 +20,7 @@ return {
         vim.keymap.set('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
     end},
 
-    {'nvim-telescope/telescope.nvim', version = '0.1.1', event = 'BufReadPost', keys = {
+    {'nvim-telescope/telescope.nvim', event = 'BufReadPost', keys = {
         '<leader>s', '<C-p>',
     }, cmd = {
         'Glg', 'Gst', 'Diag', 'Tags'
@@ -60,11 +60,11 @@ return {
         require('plugin_config.tree')
     end},
 
-    {'akinsho/bufferline.nvim', event = 'BufReadPost', version = '4.5.2^', config = function()
+    {'akinsho/bufferline.nvim', event = 'BufReadPost', config = function()
         require('plugin_config.bufferline')
     end},
 
-    {'L3MON4D3/LuaSnip', event = 'InsertEnter', version = '*', config = function()
+    {'L3MON4D3/LuaSnip', event = 'InsertEnter', config = function()
         require('plugin_config.luasnip')
     end},
 
@@ -126,7 +126,7 @@ return {
 
     {'junegunn/vim-easy-align', keys = {{'ga', '<Plug>(EasyAlign)', mode = 'x'}}},
 
-    {'kylechui/nvim-surround', version = '*', keys = {
+    {'kylechui/nvim-surround', keys = {
         'ds', 'cs', {'s', mode = 'v'}
     }, opts = {keymaps = {
         insert = false, insert_line = false, normal = false, normal_cur = false,
