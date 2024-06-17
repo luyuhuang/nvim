@@ -57,24 +57,6 @@ do -- goto last position
     end})
 end
 
-do -- exrc
-    vim.opt.exrc = false
-    local function exrc()
-        if vim.fn.empty(vim.fn.glob('~/.nvimrc.lua')) ~= 1 then
-            vim.cmd.source('~/.nvimrc.lua')
-        end
-        if vim.fn.empty(vim.fn.glob('.exrc.lua')) ~= 1 then
-            vim.cmd.source('.exrc.lua')
-        end
-    end
-
-    if vim.v.vim_did_enter == 1 then
-        exrc()
-    else
-        vim.api.nvim_create_autocmd('VimEnter', {callback = exrc})
-    end
-end
-
 do
     vim.api.nvim_create_autocmd({'BufEnter', 'FocusGained'}, {command = 'checktime'})
 end

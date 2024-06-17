@@ -21,7 +21,7 @@ bufferline.setup{options = {
 }}
 
 for i = 1, 9 do
-    vim.keymap.set('n', '<leader>' .. i, function() bufferline.go_to_buffer(i, true) end)
+    vim.keymap.set('n', '<leader>' .. i, function() bufferline.go_to(i, true) end)
 end
 
 vim.keymap.set('n', '<leader>j', '<Cmd>BufferLineCyclePrev<CR>')
@@ -32,7 +32,8 @@ vim.keymap.set('n', '<C-j>', '<Cmd>BufferLineMovePrev<CR>')
 vim.keymap.set('n', '<C-k>', '<Cmd>BufferLineMoveNext<CR>')
 vim.keymap.set('n', 'ZZ', function()
     if vim.bo.modified then
-        vim.cmd.write()
+        utils.log_err('No write since last change')
+        return
     end
     vim.cmd.bdelete()
 end)
