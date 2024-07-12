@@ -62,6 +62,7 @@ telescope.setup{defaults = {
     file_sorter = sorter,
     layout_strategy = 'vertical',
     layout_config = {vertical = {preview_cutoff = 30}},
+    preview = {filesize_limit = 1},
 }}
 
 local function set_opts(opts)

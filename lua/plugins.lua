@@ -7,6 +7,9 @@ return {
     }, config = function()
         require('plugin_config.gitsigns')
     end},
+    {'mhinz/vim-signify', event = 'BufReadPost', config = function()
+        vim.g.signify_vcs_list = {'svn'}
+    end},
     {'kevinhwang91/nvim-hlslens', event = 'BufReadPost', dependencies = {
         'petertriho/nvim-scrollbar'
     }, config = function()
