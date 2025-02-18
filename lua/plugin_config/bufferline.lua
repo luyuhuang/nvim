@@ -1,5 +1,6 @@
 local bufferline = require('bufferline')
 local utils = require('utils')
+local lazy_config = require("lazy.core.config")
 
 local hide = {
     qf = true,
@@ -35,7 +36,14 @@ vim.keymap.set('n', 'ZZ', function()
         utils.log_err('No write since last change')
         return
     end
+    local need2close = lazy_config.plugins['nvim-tree.lua']._.loaded and require("nvim-tree.view").is_visible()
+    if need2close then
+        vim.cmd.NvimTreeClose()
+    end
     vim.cmd.bdelete()
+    if need2close then
+        vim.cmd.NvimTreeOpen()
+    end
 end)
 
 

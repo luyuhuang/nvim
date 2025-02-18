@@ -27,7 +27,7 @@ local function on_attach(client, bufnr)
 
     vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {callback = vim.lsp.buf.document_highlight, buffer = bufnr})
     vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {callback = vim.lsp.buf.clear_references, buffer = bufnr})
-    vim.api.nvim_create_autocmd({'TextChangedI', 'TextChangedP'}, {callback = vim.lsp.buf.signature_help, buffer = bufnr})
+    vim.api.nvim_create_autocmd({'CursorHoldI'}, {callback = vim.lsp.buf.signature_help, buffer = bufnr})
 
     vim.api.nvim_buf_create_user_command(bufnr, 'Fmt', function(opts)
         local range
