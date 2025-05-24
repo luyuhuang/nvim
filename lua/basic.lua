@@ -72,6 +72,7 @@ vim.keymap.set({'i', 'c'}, '<C-v>', '<C-r>+')
 vim.keymap.set('v', '<C-v>', '"+p')
 vim.keymap.set('t', '<C-v>', '<C-\\><C-n>"+pa')
 vim.keymap.set('v', '<C-c>', '"+y')
+vim.keymap.set('n', '<C-c>', '"+yiw')
 
 vim.keymap.set({'n', 'i'}, '<C-s>', '<Cmd>w<CR>')
 

@@ -1,6 +1,7 @@
 local gs = require('gitsigns')
 gs.setup{
     current_line_blame = true,
+    max_file_length = 100000,
     on_attach = function(bufnr)
         local function map(mode, l, r, opts)
             opts = opts or {}

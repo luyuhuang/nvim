@@ -110,3 +110,35 @@ do
         end
     end, {})
 end
+
+do
+    vim.api.nvim_create_user_command('CCinclude', function(opts)
+        local s = '#include "' .. vim.fn.expand('%') .. '"'
+        vim.fn.setreg('"', s .. '\n')
+        utils.log_info(s)
+    end, {})
+end
+
+do
+    local function find_cls(line)
+        for i = line - 1, 1, -1 do
+            local _, _, cls = vim.fn.getline(i):find('^%s*class%s*([_%w]+)')
+            if cls then
+                return cls
+            end
+        end
+    end
+
+    vim.api.nvim_create_user_command('CCdef', function(opts)
+        local cls = opts.args
+        if not cls or cls == '' then
+            cls = find_cls(opts.line1) or "CLASS"
+        end
+        local s = ''
+        for i = opts.line1, opts.line2 do
+            s = s .. vim.fn.getline(i):gsub('^%s*(.-)%s*$', '%1')
+        end
+        s = s:gsub('([_%w]+%s*[*&]*%s*)([_%w]+%s*%(.-%))%s*;', '%1' .. cls .. '::%2\n{\n}\n')
+        vim.fn.setreg('"', s)
+    end, {range = true, nargs = '?'})
+end
