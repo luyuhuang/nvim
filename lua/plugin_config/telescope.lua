@@ -112,7 +112,7 @@ end
 
 vim.keymap.set('n', '<leader>s', function() builtin.live_grep(utils.live_grep_opts{}) end)
 vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find)
-vim.keymap.set('n', '<leader>p', function() builtin.buffers{initial_mode = 'normal'} end)
+vim.keymap.set('n', '<leader>p', builtin.buffers)
 vim.keymap.set('n', '<C-p>', builtin.find_files)
 vim.keymap.set('n', '<C-o>', current_buffer_tags)
 vim.keymap.set('n', 'gd', function()

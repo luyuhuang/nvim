@@ -49,11 +49,9 @@ return {
     {'folke/tokyonight.nvim', dependencies = 'nvim-lualine/lualine.nvim', config = function()
         vim.cmd.colorscheme('tokyonight-day')
     end},
+
     {'nvim-lualine/lualine.nvim', config = function()
-        require('lualine').setup{
-            options = {globalstatus = true},
-            sections = {lualine_c = {{'filename', path = 1}}},
-        }
+        require('plugin_config.lualine')
     end},
 
     'kyazdani42/nvim-web-devicons',
@@ -124,7 +122,9 @@ return {
 
     {'terrortylor/nvim-comment', keys = {
         {'<C-_>', '<Cmd>CommentToggle<CR>', mode = 'n'},
+        {'<C-/>', '<Cmd>CommentToggle<CR>', mode = 'n'},
         {'<C-_>', ':CommentToggle<CR>', mode = 'v'},
+        {'<C-/>', ':CommentToggle<CR>', mode = 'v'},
     }, name = 'nvim_comment', opts = {create_mappings = false}},
 
     {'junegunn/vim-easy-align', keys = {{'ga', '<Plug>(EasyAlign)', mode = 'x'}}},
