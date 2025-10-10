@@ -1,33 +1,33 @@
-local lspconfig = require('lspconfig')
-local configs = require('lspconfig.configs')
-local util = require('lspconfig.util')
 local builtin = require('telescope.builtin')
+local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
-configs.luahelper = { default_config = {
-    cmd = {'luahelper-lsp', '-mode=1', '-logflag=0'},
-    filetypes = {'lua'},
-    root_dir = util.root_pattern('.git', 'luahelper.json'),
-}}
+local function signature_help()
+    return vim.lsp.buf.signature_help{
+        silent = true,
+        border = "rounded",
+        focus = false,
+        focusable = false,
+    }
+end
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-    focus = false,
-})
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"})
+local function hover()
+    return vim.lsp.buf.hover{
+        border = "rounded",
+    }
+end
 
-require('lspconfig.ui.windows').default_options.border = 'rounded'
-
-local function on_attach(client, bufnr)
+vim.api.nvim_create_autocmd('LspAttach', {callback = function(args)
+    local bufnr = args.buf
     local bufopts = {noremap=true, silent=true, buffer=bufnr}
     vim.keymap.set('n', '<C-o>', function() builtin.lsp_document_symbols{symbol_width = 0.8} end, bufopts)
     vim.keymap.set('n', 'gd', function() builtin.lsp_definitions{fname_width = 0.4} end, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'K', hover, bufopts)
     vim.keymap.set('n', 'grr', function() builtin.lsp_references{fname_width = 0.4} end, bufopts)
     vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, bufopts)
 
     vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {callback = vim.lsp.buf.document_highlight, buffer = bufnr})
     vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {callback = vim.lsp.buf.clear_references, buffer = bufnr})
-    vim.api.nvim_create_autocmd({'CursorHoldI'}, {callback = vim.lsp.buf.signature_help, buffer = bufnr})
+    vim.api.nvim_create_autocmd({'CursorHoldI'}, {callback = signature_help, buffer = bufnr})
 
     vim.api.nvim_buf_create_user_command(bufnr, 'Fmt', function(opts)
         local range
@@ -36,22 +36,28 @@ local function on_attach(client, bufnr)
         end
         vim.lsp.buf.format{async = true, range = range}
     end, {range = true})
-end
+end})
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+vim.lsp.config('*', {capabilities = cmp_nvim_lsp.default_capabilities()})
 
 if vim.fn.executable('luahelper-lsp') == 1 then
-    lspconfig.luahelper.setup{on_attach = on_attach, capabilities = capabilities}
+    vim.lsp.config('luahelper', {
+        cmd = {'luahelper-lsp', '-mode=1', '-logflag=0'},
+        filetypes = {'lua'},
+        root_markers = {'.git', 'luahelper.json'},
+    })
+    vim.lsp.enable('luahelper')
 end
 
 if vim.fn.executable('ccls') == 1 then
-    lspconfig.ccls.setup{on_attach = on_attach, capabilities = capabilities, init_options = {
+    vim.lsp.config('ccls', {init_options = {
         index = {threads = 8},
-    }}
+    }})
+    vim.lsp.enable('ccls')
 elseif vim.fn.executable('clangd') == 1 then
-    lspconfig.clangd.setup{on_attach = on_attach, capabilities = capabilities}
+    vim.lsp.enable('clangd')
 end
 
 if vim.fn.executable('gopls') == 1 then
-    lspconfig.gopls.setup{on_attach = on_attach, capabilities = capabilities}
+    vim.lsp.enable('gopls')
 end
