@@ -106,7 +106,8 @@ do
         local fname = path .. vim.fn.sha256(vim.fn.getcwd()) .. '.vim'
         if vim.fn.filereadable(fname) ~= 0 then
             vim.cmd.source(fname)
-            vim.cmd('Lazy load bufferline.nvim')
+            -- vim.cmd('Lazy load bufferline.nvim')
+            vim.cmd('Lazy load barbar.nvim')
         end
     end, {})
 end

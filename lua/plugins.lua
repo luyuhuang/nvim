@@ -46,8 +46,12 @@ return {
         vim.g.VM_Extend_hl  = 'Visual'
     end},
 
-    {'folke/tokyonight.nvim', dependencies = 'nvim-lualine/lualine.nvim', config = function()
-        vim.cmd.colorscheme('tokyonight-day')
+    -- {'folke/tokyonight.nvim', dependencies = 'nvim-lualine/lualine.nvim', config = function()
+    --     vim.cmd.colorscheme('tokyonight-day')
+    -- end},
+
+    {"catppuccin/nvim", version = '^1.11.0', dependencies = 'nvim-lualine/lualine.nvim', config = function()
+        vim.cmd.colorscheme('catppuccin-latte')
     end},
 
     {'nvim-lualine/lualine.nvim', config = function()
@@ -61,8 +65,17 @@ return {
         require('plugin_config.tree')
     end},
 
-    {'akinsho/bufferline.nvim', event = 'BufReadPost', config = function()
-        require('plugin_config.bufferline')
+    -- {'akinsho/bufferline.nvim', event = 'BufReadPost', config = function()
+    --     require('plugin_config.bufferline')
+    -- end},
+
+    {'romgrk/barbar.nvim', version = '^1.9.0', event = 'BufReadPost', dependencies = {
+        'lewis6991/gitsigns.nvim',
+        'nvim-tree/nvim-web-devicons'
+    }, init = function()
+        vim.g.barbar_auto_setup = false
+    end, config = function()
+        require('plugin_config.barbar')
     end},
 
     {'L3MON4D3/LuaSnip', event = 'InsertEnter', config = function()
