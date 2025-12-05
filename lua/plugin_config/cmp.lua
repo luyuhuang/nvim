@@ -4,7 +4,7 @@ local luasnip = require('luasnip')
 vim.opt.completeopt = 'menu,menuone,noselect'
 
 cmp.setup{
-    completion = {keyword_length = 3},
+    completion = {keyword_length = 1},
     preselect = cmp.PreselectMode.None,
     snippet = {
         expand = function(args)
@@ -12,8 +12,6 @@ cmp.setup{
         end,
     },
     mapping = cmp.mapping.preset.insert({
-        ['<Tab>'] = cmp.mapping.select_next_item(),
-        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
         ['<C-j>'] = cmp.mapping.select_next_item(),
         ['<C-k>'] = cmp.mapping.select_prev_item(),
         ['<down>'] = cmp.mapping.select_next_item(),
