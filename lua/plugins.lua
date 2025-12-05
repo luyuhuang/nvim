@@ -96,7 +96,7 @@ return {
         }
     end},
 
-    {'phaazon/hop.nvim', branch = 'v2', keys = {
+    {'smoka7/hop.nvim', tag = 'v2.7.2', keys = {
         {'<leader>h', '<Cmd>HopWord<CR>', mode = 'n', silent = true},
         {'<leader>H', '<Cmd>HopLine<CR>', mode = 'n', silent = true},
         {'<leader>f', '<Cmd>HopWordCurrentLine<CR>', mode = 'n', silent = true},
