@@ -4,6 +4,8 @@ local utils = require('utils')
 barbar.setup{
     exclude_ft = {'qf'},
     icons = {
+        buffer_index = true,
+        filetype = {enabled = false},
         separator_at_end = false,
     },
     sidebar_filetypes = {
@@ -18,11 +20,18 @@ end
 vim.keymap.set('n', '<leader>j', '<Cmd>BufferPrevious<CR>')
 vim.keymap.set('n', '<leader>k', '<Cmd>BufferNext<CR>')
 vim.keymap.set('n', 'gT', '<Cmd>BufferPrevious<CR>')
-vim.keymap.set('n', 'gt', '<Cmd>BufferNext<CR>')
+vim.keymap.set('n', 'gt', function()
+    local c = vim.v.count
+    if c > 0 then
+        vim.cmd.BufferGoto(c)
+    else
+        vim.cmd.BufferNext()
+    end
+end)
 vim.keymap.set('n', '<C-j>', '<Cmd>BufferMovePrevious<CR>')
 vim.keymap.set('n', '<C-k>', '<Cmd>BufferMoveNext<CR>')
-vim.keymap.set('n', '<M-,>', '<Cmd>BufferScrollLeft 10<CR>')
-vim.keymap.set('n', '<M-.>', '<Cmd>BufferScrollRight 10<CR>')
+vim.keymap.set('n', '<M-j>', '<Cmd>BufferScrollLeft 10<CR>')
+vim.keymap.set('n', '<M-k>', '<Cmd>BufferScrollRight 10<CR>')
 
 vim.keymap.set('n', 'ZZ', function()
     if vim.bo.modified then
