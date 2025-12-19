@@ -25,9 +25,14 @@ vim.api.nvim_create_autocmd('LspAttach', {callback = function(args)
     vim.keymap.set('n', 'grr', function() builtin.lsp_references{fname_width = 0.4} end, bufopts)
     vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, bufopts)
 
-    vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {callback = vim.lsp.buf.document_highlight, buffer = bufnr})
+    local capabilities = vim.lsp.get_clients{id = args.data.client_id}[1].server_capabilities
+    if capabilities.documentHighlightProvider then
+        vim.api.nvim_create_autocmd({'CursorHold', 'CursorHoldI'}, {callback = vim.lsp.buf.document_highlight, buffer = bufnr})
+    end
     vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'}, {callback = vim.lsp.buf.clear_references, buffer = bufnr})
-    vim.api.nvim_create_autocmd({'CursorHoldI'}, {callback = signature_help, buffer = bufnr})
+    if capabilities.signatureHelpProvider then
+        vim.api.nvim_create_autocmd({'CursorHoldI'}, {callback = signature_help, buffer = bufnr})
+    end
 
     vim.api.nvim_buf_create_user_command(bufnr, 'Fmt', function(opts)
         local range
