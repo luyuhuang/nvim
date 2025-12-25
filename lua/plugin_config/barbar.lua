@@ -3,6 +3,7 @@ local utils = require('utils')
 
 barbar.setup{
     exclude_ft = {'qf'},
+    focus_on_close = 'previous',
     icons = {
         buffer_index = true,
         filetype = {enabled = false},
